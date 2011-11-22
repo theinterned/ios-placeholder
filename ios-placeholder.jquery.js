@@ -4,14 +4,14 @@
     if(!this.length) {
       return false;
     }
-    return this.filter('input').each(function() {
+    return this.filter('input, textarea').each(function() {
       
       var $this = $(this),
       
           // Init placeholder div
           placeholderText = $this.attr('placeholder'),
           $placeholder = $('<div class="placeholder">')
-            .css({ position: 'absolute', paddingLeft: (($this.outerHeight() - $this.height()) / 2) + 2 + "px" })
+            .css({ position: 'absolute', paddingLeft: (($this.outerHeight() - $this.height()) / 2) + 2 + "px", lineHeight: $this.lineHeight() })
             .text(placeholderText)
             
             // Trigger text field focus
