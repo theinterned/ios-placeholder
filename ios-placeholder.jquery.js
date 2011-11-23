@@ -4,14 +4,22 @@
     if(!this.length) {
       return false;
     }
-    return this.filter('input').each(function() {
+    return this.filter('input, textarea').each(function() {
       
       var $this = $(this),
       
           // Init placeholder div
           placeholderText = $this.attr('placeholder'),
           $placeholder = $('<div class="placeholder">')
-            .css({ position: 'absolute', paddingLeft: (($this.outerHeight() - $this.height()) / 2) + 2 + "px" })
+            .css({ 
+              position: 'absolute', 
+              paddingLeft: (($this.outerHeight() - $this.height()) / 2) + 2 + "px", 
+              paddingTop: (parseInt($this.css('padding-top'),10) + parseInt($this.css('border-top-width'),10)) + 'px',
+              width: $this.width(), 
+              whiteSpace: 'nowrap', 
+              overflow: 'hidden', 
+              lineHeight: $this.css('line-height') 
+            })
             .text(placeholderText)
             
             // Trigger text field focus
@@ -28,7 +36,6 @@
           $placeholderWrapper = $('<div class="placeholder-wrapper">')
             .css(wrapperStyles)
             .html($placeholder);
-      
       $this
         .attr('autocomplete', 'off')
         .removeAttr('placeholder');
