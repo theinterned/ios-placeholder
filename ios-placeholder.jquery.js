@@ -57,15 +57,30 @@
         }
       });
       
-      $this.bind('keydown.iosPlaceholder', function(evt) {
+      var keyDown = function(evt) {
         // A list of keycodes that don't output any characters
         if(!(evt.which === 13 || (evt.which >= 16 && evt.which <= 20) || (evt.which === 27) || (evt.which >= 33 && evt.which <= 40) || (evt.which >= 91 && evt.which <= 93) || (evt.which >= 112 && evt.which <= 123) || (evt.which >= 144 && evt.which <= 145) || evt.which === 224)) {
           $placeholder.hide();
         }
-      });
-      $this.bind('keyup.iosPlaceholder', function(evt) {
+      };
+      
+      $this.bind('keydown.iosPlaceholder', keyDown);
+      
+      var keyUp = function(evt) {
         if(!$this.val()) {
           $placeholder.show();
+        }
+      };
+            
+      $this.bind('keyup.iosPlaceholder', keyUp);
+      
+      $this.bind('input.iosPlaceholder', function(evt) {
+        // we have the better oninput event to work with so remove the oldschool event handlers
+        $(this).unbind('keyup.iosPlaceholder', keyUp).unbind('keydown.iosPlaceholder', keyDown);
+        if(!$this.val()) {
+          $placeholder.show();
+        } else{
+          $placeholder.hide();
         }
       });
     });
