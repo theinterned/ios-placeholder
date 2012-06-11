@@ -18,11 +18,12 @@
               width: $this.width(), 
               whiteSpace: 'nowrap', 
               overflow: 'hidden', 
+              pointerEvents: 'none', 
               lineHeight: $this.css('line-height') 
             })
             .text(placeholderText)
             
-            // Trigger text field focus
+            // Trigger text field focus if no pointer-event support
             .bind('click.iosPlaceholder', function() {
               $this.focus();
             }),
@@ -37,7 +38,6 @@
             .css(wrapperStyles)
             .html($placeholder);
       $this
-        .attr('autocomplete', 'off')
         .removeAttr('placeholder');
       
       // Wrap input field in placeholder wrapper
@@ -70,7 +70,7 @@
           $placeholder.hide();
         }
       });
-      $this.bind('keyup.iosPlaceholder', function(evt) {
+      $this.bind('keyup.iosPlaceholder', 'change', function(evt) {
         if(!$this.val()) {
           $placeholder.show();
         }
